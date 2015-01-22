@@ -1,0 +1,8 @@
+node_modules
+dist
+coverage
+.bowerrc
+bower_components
+complexity-report
+.svn
+.idea
