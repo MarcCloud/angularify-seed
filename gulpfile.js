@@ -41,7 +41,7 @@ var gulp = require('gulp'),
     });
 
     gulp.task('js',function(){
-       return browserify('./app/app.js',{debug:true}).bundle()
+       return browserify('./app/app.js',{debug:true,transform:'debowerify'}).bundle()
            .pipe(source('spa.bundle.js'))
            .pipe(gulp.dest('./dist/scripts'))
            .pipe(connect.reload());
