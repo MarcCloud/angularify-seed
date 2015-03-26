@@ -3,6 +3,7 @@
  */
 var gulp = require('gulp'),
     browserify = require('browserify'),
+    exorcist = require('exorcist'),
     source = require('vinyl-source-stream'),
     jade = require('gulp-jade'),
     sass = require('gulp-sass'),
@@ -41,7 +42,8 @@ var gulp = require('gulp'),
     });
 
     gulp.task('js',function(){
-       return browserify('./app/app.js',{debug:true,transform:'debowerify'}).bundle()
+       return browserify('./app/app.js',{debug:true,transform:['debowerify','uglifyify']}).bundle()
+           .pipe(exorcist('./dist/scripts/spa.bundle.js.map'))
            .pipe(source('spa.bundle.js'))
            .pipe(gulp.dest('./dist/scripts'))
            .pipe(connect.reload());
