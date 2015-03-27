@@ -42,7 +42,8 @@ var gulp = require('gulp'),
     });
 
     gulp.task('js',function(){
-       return browserify('./app/app.js',{debug:true,transform:['debowerify','uglifyify']}).bundle()
+       return browserify('./app/app.js',{debug:true,transform:['debowerify','uglifyify']})
+           .bundle()
            .pipe(exorcist('./dist/scripts/spa.bundle.js.map'))
            .pipe(source('spa.bundle.js'))
            .pipe(gulp.dest('./dist/scripts'))
