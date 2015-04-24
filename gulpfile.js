@@ -4,6 +4,7 @@
 var gulp = require('gulp'),
     browserify = require('browserify'),
     exorcist = require('exorcist'),
+    mold=require('mold-source-map'),
     source = require('vinyl-source-stream'),
     jade = require('gulp-jade'),
     sass = require('gulp-sass'),
@@ -41,9 +42,17 @@ var gulp = require('gulp'),
            .pipe(connect.reload());
     });
 
+    gulp.task('bundle-vendors',function(){
+        return browserify('./app/core-dependencies.js',{debug:false,transform:['debowerify','uglifyify']})
+            .bundle()
+            .pipe(source('vendors.js'))
+            .pipe(gulp.dest('./dist/scripts'))
+            .pipe(connect.reload());
+    });
     gulp.task('js',function(){
        return browserify('./app/app.js',{debug:true,transform:['debowerify','uglifyify']})
            .bundle()
+           .pipe(mold.transformSourcesRelativeTo('./app'))
            .pipe(exorcist('./dist/scripts/spa.bundle.js.map'))
            .pipe(source('spa.bundle.js'))
            .pipe(gulp.dest('./dist/scripts'))
@@ -61,7 +70,7 @@ var gulp = require('gulp'),
     gulp.task('watch',function(){
         gulp.watch('./app/**/*.jade',['html']);
         gulp.watch('./app/**/*.scss',['css']);
-        gulp.watch('./app/**/*.js',['js']);
+        gulp.watch('./app/**/*.js',['lint-js','unit-test','js']);
     });
 
     gulp.task('unit-test',function(cb){
