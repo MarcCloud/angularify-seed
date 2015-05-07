@@ -1,5 +1,5 @@
 /**
- * Created by U39303 on 1/8/2015.
+ * Created by Marco Romero on 1/8/2015.
  */
 module.exports=angular.module('spa.home',[])
     .controller('LandingController',[require('./controller-landing')]);
